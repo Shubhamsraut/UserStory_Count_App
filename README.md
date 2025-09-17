@@ -1,209 +1,135 @@
-📄 User Story Extractor (Streamlit)
+# 📄 **User Story Extractor – Streamlit Web App**
 
-Extract Epics, User Stories, and Acceptance Criteria (AC) from a .docx (Microsoft Word) document and explore them in a clean Streamlit UI. Export summaries to CSV/Excel with a click.
+Transform **Epics**, **User Stories**, and **Acceptance Criteria (AC)** from Microsoft Word `.docx` documents into an interactive dashboard.  
+Upload a `.docx`, parse instantly, filter by Epic or Story, and export clean summaries to **CSV/Excel** – all within a modern Streamlit interface.
 
-https://github.com/Shubhamsraut/UserStory_Count_App
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://userstorycountapppy-fromdoc.streamlit.app)
 
-✨ Features
+---
 
-Parse .docx documents that contain Epics, Stories, and AC tables
+## ✨ **Features**
+- **Automatic Parsing** – Detects Epics, Stories, and AC tables directly from `.docx`.  
+- **Smart Header Handling** – Handles inconsistent headers (`Sr. No`, `S.No`, `Expected Result`, etc.).  
+- **Summary Metrics** – Totals for Epics, Stories, ACs, and Avg AC per Story.  
+- **Filters & Search** – Filter by **Epic**, **Story ID**, or keywords.  
+- **One-Click Exports** – Download filtered **Stories** or **ACs** as CSV or Excel.  
+- **Modern UI** – Clean, tabbed, and responsive Streamlit interface.
 
-Smart detection of AC tables even with noisy headers (e.g., Sr. No, S.No, Expected Result)
+---
 
-Robust header canonicalization (maps variants → Scenario, Given/When/Then, AC #, Acceptance Criteria)
+## 🧠 **How It Works**
+1. **Identify Epics** – Matches lines like `Epic 12: Payments`.  
+2. **Identify Stories** – Matches lines like `User Story 2.1: Add UPI option`.  
+3. **Locate AC Tables** – Finds tables containing keywords (`acceptance`, `criteria`, `given`, `then`, etc.).  
+4. **Normalize Headers** –  
+   - `Sr. No`, `S.No`, `#`, `ID` → **AC #**  
+   - `Scenario`, `Expected Result` → **Scenario**  
+5. **Generate Outputs** –  
+   - `stories_df`: Module, Epic, Story ID, Story Title, Acceptance Criteria Count  
+   - `ac_df`: Module, Epic, Story ID, Story Title, AC #, Scenario  
 
-Summary metrics: total Epics, Stories, ACs, average ACs per story
+---
 
-Interactive filters: by Epic, Story ID, keyword search
+## 📦 **Requirements**
+- **Python** ≥ 3.9  
 
-One-click export to CSV and Excel for both Stories and ACs
-
-Clean, responsive Streamlit UI with tabs
-
-🧠 How it works (quick peek)
-
-Epics are recognized by lines like:
-Epic 12: Payments
-
-Stories are recognized by lines like:
-User Story 2.1: Add UPI option or Story 3: Search
-
-AC tables are found by scanning tables where the first/second row includes AC-related keywords (acceptance, criteria, scenario, given, when, then, expected, result).
-
-Column aliases are normalized. Examples that map correctly:
-
-Sr. No, S.No, Sr.No., #, ID → AC #
-
-Scenario, Acceptance Criteria, Expected, Result → Scenario
-
-Outputs:
-
-stories_df: Module, Epic, Story ID, Story Title, Acceptance Criteria Count
-
-ac_df: Module, Epic, Story ID, Story Title, AC #, Scenario
-
-📦 Requirements
-
-Python 3.9+
-
-streamlit, pandas, python-docx, xlsxwriter
-
-Create a requirements.txt (example):
-
+Create a `requirements.txt`:  
+```txt
 streamlit>=1.31
 pandas>=2.0
 python-docx>=1.0
 XlsxWriter>=3.0
 
-🚀 Quickstart
-# 1) Clone your repo
+```
+---
+
+## 🚀 **Quickstart (Run Locally)**
+1️⃣ **Clone the Repository**
 git clone https://github.com/Shubhamsraut/UserStory_Count_App.git
-cd your-repo-name
+cd UserStory_Count_App
 
-# 2) (Optional) create & activate a virtual env
+2️⃣ **(Optional) Create & Activate Virtual Environment**
+```txt
 python -m venv .venv
-# Windows:
+```
+
+### Windows 
+```txt
 .venv\Scripts\activate
-# Mac/Linux:
+```
+
+### macOS/Linux
+```txt
 source .venv/bin/activate
+```
 
-# 3) Install deps
+3️⃣ **Install Dependencies**
+```txt
 pip install -r requirements.txt
+```
 
-# 4) Run the app
-streamlit run app.py
+4️⃣ **Run the App**
+```txt
+streamlit run Userstory_count_APP.py
+```
 
+👉 Visit http://localhost:8501
+ if the browser doesn’t open automatically.
 
-By default Streamlit opens in your browser; if not, visit http://localhost:8501.
+---
 
-🗂️ Input document format (example)
+## 🗂 **Example: Payments Module**  
 
-A minimal .docx that will parse well:
+### 📂 **Module:** Payments  
+#### 🏷 **Epic 1:** Wallet Top-up  
 
-Module: Payments
+**User Story 2: Add Money Using UPI**  
+*AS A* **wallet user**  
+*I WANT* **to add money to my wallet using UPI**  
+*SO THAT* **I can quickly top-up my balance for transactions.**
 
-Epic 1: Wallet Top-up
+---
 
-User Story 1.1: Add money using UPI
+### ✅ **Acceptance Criteria**
 
-| Sr. No | Scenario                                   | Given             | When                 | Then                    | Expected Result                 |
-|--------|--------------------------------------------|-------------------|----------------------|-------------------------|---------------------------------|
-| 1      | UPI handle is valid                        | ...               | ...                  | ...                     | Payment succeeds                |
-| 2      | UPI handle is invalid                      | ...               | ...                  | ...                     | Error is shown                  |
-
-User Story 1.2: View top-up history
-
-| AC # | Acceptance Criteria                           |
-|------|-----------------------------------------------|
-| 1    | Shows last 10 transactions                    |
-| 2    | Includes amount, date, and status             |
-
-
-Notes
-
-“Module” can appear anywhere in the doc and will be captured once (defaults to Unknown if absent).
-
-AC tables can have different headers; the app infers AC # and Scenario when possible.
-
-Rows that are completely empty are ignored.
-
-🧭 Using the App
-
-Upload a .docx file in the sidebar / uploader.
-
-See the Summary metrics and switch to:
-
-Story Details tab: filter by Epic, search by title, export stories.
-
-Acceptance Criteria tab: filter by Epic & Story ID, keyword search (matches Scenario or AC #), export ACs.
-
-Download CSV/Excel using the provided buttons.
-
-🧩 Project Structure
-.
-├─ app.py                 # Streamlit app (paste your code here)
-├─ requirements.txt
-├─ README.md
-└─ .streamlit/
-   └─ config.toml         # optional Streamlit configuration
+| **Sr. No** | **Scenario**         | **Acceptance Criteria**                                                                 |
+|-------------|--------------------|-----------------------------------------------------------------------------------------|
+| **2.1**     | Navigate to Wallet  | **Given** the user is logged in<br>**When** they click “Wallet Top-up” in the Payments section<br>**Then** the top-up dashboard loads |
+| **2.2**     | Successful UPI      | **Given** a valid UPI handle is entered<br>**When** the user confirms payment<br>**Then** the wallet balance increases and a success message is displayed |
+| **2.3**     | Invalid UPI         | **Given** an invalid UPI handle is entered<br>**When** the user attempts payment<br>**Then** an error message appears prompting the user to correct the UPI |
+| **2.4**     | View Top-up History | **Given** previous top-ups exist<br>**When** the user opens the history tab<br>**Then** a list of past top-ups is displayed with columns *(Transaction ID, Amount, Date, Status)* |
 
 
-Optional .streamlit/config.toml:
+## 🌐 **Deployment**  
+- ▶ **Streamlit Community Cloud**:  
+  1. Push your code (`Userstory_count_APP.py` and `requirements.txt`) to GitHub.  
+  2. Visit [share.streamlit.io](https://share.streamlit.io) → **Create App** → Select your repo, branch, and file.  
+  3. Click **Deploy** – Streamlit redeploys automatically on each `git push`.  
+- ▶ **Alternatives**: Hugging Face Spaces (Streamlit deployment) • Render (private repo support).
 
-[server]
-headless = false
-port = 8501
+---
 
-🛠️ Packaging Tips
-
-Add a .gitignore to keep the repo clean:
-
-.venv/
-__pycache__/
-*.pyc
-*.xlsx
-*.csv
-.DS_Store
+## 🧪 **Known Limitations**  
+- Supports **`.docx` only** (not `.pdf` or legacy `.doc`).  
+- Non-standard formats may not parse perfectly.  
+- Exports focus on key columns for simplicity.
 
 
-If you have example docs, place them under samples/ and reference them in the README.
+---
 
-🌐 Deploy (optional)
+## 👥 **Contributing**  
+- Issues and PRs are welcome!  
+- Provide minimal `.docx` samples for bug reports.  
+- Enhancements to parsing logic or UI are appreciated.
 
-Streamlit Community Cloud
+---
 
-Push to GitHub (include requirements.txt and app.py).
+## 🧾 **Credits**  
+Built with **Streamlit**, **pandas**, **python-docx**, and **XlsxWriter**.  
+Custom CSS applied for a polished, intuitive UI.
 
-In Streamlit Cloud, Create app → select repo/branch/file → Deploy.
+---
 
-Add secrets in the platform UI if needed.
+### 📜 **License: MIT © 2025 Shubham Raut**
 
-Hugging Face Spaces
 
-Create a Space → select Streamlit.
-
-Add app.py and requirements.txt.
-
-The app builds & serves automatically on each commit.
-
-🧪 Known Limitations
-
-Only .docx is supported (not .pdf/.doc).
-
-If a document deviates heavily from the expected patterns, detection may skip tables or mislabel columns.
-
-AC parsing intentionally returns a minimal set of columns: AC # and Scenario.
-
-❓ FAQ
-
-Q: My AC table headers are odd; will it still work?
-A: Likely yes. The app normalizes many header variants (Sr. No, Expected Result, etc.). If it still fails, try renaming to common forms like AC #, Scenario, Acceptance Criteria.
-
-Q: Can I include Given/When/Then?
-A: Yes—these can exist in the table and won’t break parsing. The app focuses exports on AC # + Scenario for simplicity.
-
-Q: How is “Module” determined?
-A: It’s extracted once from any line like Module: <name>. If not found, it defaults to Unknown.
-
-📜 License
-
-Choose a license (e.g., MIT) and add a LICENSE file. Example MIT header:
-
-MIT License — Copyright (c) 2025 Shubham Raut
-
-👥 Contributing
-
-Issues and PRs welcome! Please:
-
-Open an issue with a minimal sample .docx if parsing fails.
-
-Keep functions pure and add unit tests for regex/header handling where possible.
-
-🧾 Credits
-
-Built with Streamlit, pandas, python-docx, and XlsxWriter.
-
-UI styling via custom CSS in Streamlit.
-
-Tip: Want a one-click launcher? Create a desktop script that runs:
-streamlit run app.py --server.port 8501 and opens http://localhost:8501.
