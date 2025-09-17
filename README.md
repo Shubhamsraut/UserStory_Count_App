@@ -132,4 +132,18 @@ Custom CSS applied for a polished, intuitive UI.
 
 ### 📜 **License: MIT © 2025 Shubham Raut**
 
+---
+
+## 🚀 **Future Enhancements & Growth Potential**
+
+To make **User Story Extractor** even more impactful:  
+
+- 📂 **Multi-File Support** – Upload and process multiple `.docx` documents at once for bulk parsing.  
+- 🔗 **Direct Jira/Trello Export** – Push parsed Epics and Stories straight into popular project management tools.  
+- 🎨 **Enhanced UI/UX** – Add richer visualizations (graphs, charts) and more intuitive filtering for non-technical users.  
+- 🤝 **Community Engagement** – Share with Agile/Product Management communities to gather feedback, showcase real-world use cases, and attract contributors.  
+- 🧠 **AI-Powered Suggestions** *(optional future idea)* – Use NLP to flag incomplete acceptance criteria or suggest missing scenarios.
+
+💡 **Why This Matters**  
+Even in 2025, many teams rely on Word for requirement gathering. Expanding these features could save **hours of manual work**, improve **data quality**, and make onboarding to Agile tools **faster and smoother** for teams of any size.
 
